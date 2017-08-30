@@ -39,10 +39,10 @@ const numStudents = 50;
 const studentEmails = chance.unique(chance.email, numStudents);  // get 50 unique email addresses
 
 const randomStudent = () => {
-  let gender = chance.gender();
+  let gender = chance.gender().toLocaleLowerCase();
   return Student.create({
     name: chance.name({ gender }),
-    image: toonavatar.generate_avatar({ gender: gender.toLowerCase() }),
+    image: toonavatar.generate_avatar({ gender }),
     email: studentEmails.pop(),
   })
     .then(student => {
@@ -71,11 +71,11 @@ const seed = () => {
     .catch(err => console.log(err));
 };
 
-console.log('Syncing database jungs-university ...');
+console.log('Syncing database campusmanager ...');
 
 db.sync({ force: true })
   .then(() => {
-    console.log('Seeding database jungs-university ...');
+    console.log('Seeding database campusmanager ...');
     return seed();
   })
   .catch(err => {
