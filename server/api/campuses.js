@@ -1,10 +1,13 @@
 const router = require('express').Router();
-const { Campus } = require('../../db/models');
+const { Campus, Student } = require('../../db/models');
 
 module.exports = router;
 
 router.get('/', (req, res, next) => {
-  Campus.findAll()
+  Campus.findAll({
+    include: [Student],  // eager loading
+    order: ['id']
+  })
     .then(campuses => res.status(200).send(campuses))
     .catch(next);
 });
@@ -30,7 +33,9 @@ router.put('/:id', (req, res, next) => {
 
 router.delete('/:id', (req, res, next) => {
   Campus.destroy({
-    where: { id: req.params.id }
+    where: {
+      id: req.params.id
+    }
   })
     .then(() => res.sendStatus(204))
     .catch(next);

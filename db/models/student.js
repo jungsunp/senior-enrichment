@@ -12,5 +12,8 @@ module.exports = db.define('student', {
     validate: {
       isEmail: true
     }
+  },
+  image: {
+    type: Sequelize.STRING
   }
 });

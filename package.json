@@ -7,7 +7,8 @@
     "test": "mocha **/*.test.js *.test.js",
     "build": "webpack",
     "build-watch": "webpack -w",
-    "start": "nodemon server/start.js"
+    "start": "nodemon server/start.js",
+    "seed": "node seed"
   },
   "keywords": [
     "react",
@@ -15,8 +16,11 @@
     "skeleton"
   ],
   "dependencies": {
+    "bluebird": "^3.5.0",
     "body-parser": "^1.15.2",
+    "cartoon-avatar": "^1.0.2",
     "chalk": "^1.1.3",
+    "chance": "^1.0.11",
     "express": "^4.14.0",
     "pg": "^6.1.0",
     "pg-native": "^1.10.0",
