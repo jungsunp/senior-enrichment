@@ -5,7 +5,6 @@ module.exports = router;
 
 router.get('/', (req, res, next) => {
   Campus.findAll({
-    include: [Student],  // eager loading
     order: ['id']
   })
     .then(campuses => res.status(200).send(campuses))
@@ -13,7 +12,9 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:id', (req, res, next) => {
-  Campus.findById(req.params.id)
+  Campus.findById(req.params.id, {
+    include: [Student],  // eager loading
+  })
     .then(campus => res.status(200).send(campus))
     .catch(next);
 });

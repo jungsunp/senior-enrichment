@@ -25,7 +25,19 @@ const campuses = [
    },
   { name: 'Purdue University',
     image: 'http://msnbcmedia.msn.com/i/MSNBC/Components/Slideshows/_production/_archive/News/_Politics/ss-120224-obama-year4/ss-120713-obama-year4-03.jpg'
-  }
+  },
+  { name: 'Harvard University',
+    image: 'http://msnbcmedia.msn.com/i/MSNBC/Components/Slideshows/_production/_archive/News/_Politics/ss-120224-obama-year4/ss-120713-obama-year4-03.jpg'
+  },
+  { name: 'Michigan State University',
+    image: 'http://msnbcmedia.msn.com/i/MSNBC/Components/Slideshows/_production/_archive/News/_Politics/ss-120224-obama-year4/ss-120713-obama-year4-03.jpg'
+  },
+  { name: 'Boston University',
+    image: 'http://msnbcmedia.msn.com/i/MSNBC/Components/Slideshows/_production/_archive/News/_Politics/ss-120224-obama-year4/ss-120713-obama-year4-03.jpg'
+  },
+  { name: 'Boston College',
+    image: 'http://msnbcmedia.msn.com/i/MSNBC/Components/Slideshows/_production/_archive/News/_Politics/ss-120224-obama-year4/ss-120713-obama-year4-03.jpg'
+  },
 ];
 
 const createCampuses = () => {

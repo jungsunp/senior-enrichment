@@ -14,14 +14,14 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(require('volleyball'));
 }
 
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use(express.static(resolve(__dirname, '..', 'public')));// Serve static files from ../public
 
 app.use('/api', require('./api')); // Serve our api
 
-var frontendRoutes = ['/', '/campuses', '/students', '/campuses/:id', '/students/:id'];
+var frontendRoutes = ['/', '/campuses', '/campuses/:id', '/campuses/add', '/students', '/students/:id', '/students/add'];
 var indexPath = path.join(__dirname, '..', 'public', 'index.html');
 frontendRoutes.forEach(route => {
   app.get(route, (req, res) => {
