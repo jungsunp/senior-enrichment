@@ -17,28 +17,25 @@ class CampusItem extends Component {
     return (
       <div className="col-sm-6 col-lg-4">
         <div className="thumbnail">
-          <div className="campus-img">
+          <div className="img-container">
             <img src={campus.image} />
           </div>
           <div className="caption">
-            <div className="campus-name">
+            <div className="name-container">
               <strong>{campus.name}</strong>
             </div>
-            <p className="campus-desc">
-              {campus.description}
-            </p>
-            <div>
-              <span>...</span>
-            </div>
-            <p>
+            <p className="campus-buttons">
               <NavLink
                 to={`/campuses/${campus.id}`}
-                className="btn btn-default" role="button">
+                className="btn btn-default caption-button"
+                role="button">
                 Detail
               </NavLink>
-              <NavLink to="#" className="btn btn-default" role="button">
+              <button
+                className="btn btn-default caption-button"
+                type="submit">
                 Remove
-              </NavLink>
+              </button>
             </p>
           </div>
         </div>

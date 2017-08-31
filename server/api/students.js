@@ -5,7 +5,8 @@ module.exports = router;
 
 router.get('/', (req, res, next) => {
   Student.findAll({
-    order: ['id']
+    order: ['id'],
+    include: [Campus],
   })
     .then(students => res.status(200).send(students))
     .catch(next);

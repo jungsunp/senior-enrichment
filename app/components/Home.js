@@ -15,14 +15,13 @@ class Home extends Component {
 
   render () {
     const { campuses } = this.props;
+    const campusItemArr = campuses.map(campus => (
+      <CampusItem key={campus.id} campus={campus} />
+    ));
     return (
       <div className="container">
         <div className="campus-list">
-          {
-            campuses.map(campus => (
-              <CampusItem key={campus.id} campus={campus} />
-            ))
-          }
+          { campusItemArr }
         </div>
       </div>
     );

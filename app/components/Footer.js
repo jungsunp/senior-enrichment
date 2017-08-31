@@ -4,7 +4,9 @@ import React from 'react';
 const Footer = () => {
   return (
     <div className="footer">
-      <h3>Fullstack Senior Enrichment Project by Jung Park</h3>
+      <div className="footer-text">
+        Fullstack Senior Enrichment Project by Jung Park
+      </div>
     </div>
   );
 };

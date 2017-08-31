@@ -22,7 +22,7 @@ import { fetchStudents } from './reducers/students';
 
 class Routes extends Component {
 
-  componentDidMount(){
+  componentDidMount () {
     this.props.fetchInitialData();
   }
 
@@ -33,11 +33,11 @@ class Routes extends Component {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/campuses" component={Home} />
+            <Route path="/campuses/add" component={AddCampus} />
             <Route path="/campuses/:id" component={CampusDetail} />
-            <Route path="/campuses/add" component={AddCampus} />>
             <Route exact path="/students" component={StudentList} />
-            <Route exact path="/students/:id" component={StudentDetail} />
             <Route path="/students/add" component={AddStudent} />
+            <Route exact path="/students/:id" component={StudentDetail} />
           </Switch>
         </Root>
       </Router>

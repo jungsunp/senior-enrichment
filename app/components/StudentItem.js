@@ -13,23 +13,31 @@ class StudentItem extends Component {
   }
 
   render () {
-    const { student } = this.props;
+    const { student, campus } = this.props;
     return (
       <div className="col-sm-6 col-lg-4">
         <div className="thumbnail">
-          <img src={student.image} />
+          <div className="img-container">
+            <img src={student.image} />
+          </div>
           <div className="caption">
-            <h3>{student.name}</h3>
-            <h4>email: {student.email}</h4>
+            <div className="name-container">
+              <strong>{student.name}</strong>
+              <br />
+              <span>{campus ? campus.name : null}</span>
+            </div>
             <p>
               <NavLink
                 to={`/students/${student.id}`}
-                className="btn btn-default" role="button">
+                className="btn btn-default caption-button"
+                role="button">
                 Detail
               </NavLink>
-              <NavLink to="#" className="btn btn-default" role="button">
+              <button
+                className="btn btn-default caption-button"
+                type="submit">
                 Remove
-              </NavLink>
+              </button>
             </p>
           </div>
         </div>

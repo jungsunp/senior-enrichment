@@ -15,14 +15,13 @@ class StudentList extends Component {
 
   render () {
     const { students } = this.props;
+    const studentItemArr = students.map(student => (
+      <StudentItem key={student.id} student={student} campus={student.campuses[0]} />
+    ));
     return (
       <div className="container">
         <div className="student-list">
-          {
-            students.map(student => (
-              <StudentItem key={student.id} student={student} />
-            ))
-          }
+          { studentItemArr }
         </div>
       </div>
     );

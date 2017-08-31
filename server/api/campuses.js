@@ -5,6 +5,7 @@ module.exports = router;
 
 router.get('/', (req, res, next) => {
   Campus.findAll({
+    include: [Student],  // eager loading
     order: ['id']
   })
     .then(campuses => res.status(200).send(campuses))
