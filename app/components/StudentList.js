@@ -3,6 +3,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import StudentItem from './StudentItem';
+
 /* -----------------  Component  ------------------ */
 
 class StudentList extends Component {
@@ -12,9 +14,16 @@ class StudentList extends Component {
   }
 
   render () {
+    const { students } = this.props;
     return (
-      <div>
-        This is StudentList!!
+      <div className="container">
+        <div className="student-list">
+          {
+            students.map(student => (
+              <StudentItem key={student.id} student={student} />
+            ))
+          }
+        </div>
       </div>
     );
   }
@@ -23,7 +32,9 @@ class StudentList extends Component {
 
 /* -----------------  Container  ------------------ */
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  students: state.students
+});
 
 const mapDispatchToProps = dispatch => ({
 

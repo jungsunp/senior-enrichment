@@ -12,9 +12,9 @@ const Navbar = () => {
             <span className="icon-bar"></span>
             <span className="icon-bar"></span>
           </button>
-          <span className="navbar-brand glyphicon glyphicon-map-marker"></span>
+          <span className="navbar-brand glyphicon glyphicon-education"></span>
           <NavLink to="/" className="navbar-brand">
-            Campus Navigator
+            Campus Manager
           </NavLink>
         </div>
         <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

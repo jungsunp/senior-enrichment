@@ -15,5 +15,11 @@ module.exports = db.define('student', {
   },
   image: {
     type: Sequelize.STRING
+  },
+  phone: {
+    type: Sequelize.STRING
+  },
+  birthday: {
+    type: Sequelize.STRING
   }
 });

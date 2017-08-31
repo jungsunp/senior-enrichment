@@ -3,6 +3,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import CampusItem from './CampusItem';
+
 /* -----------------  Component  ------------------ */
 
 class Home extends Component {
@@ -12,17 +14,16 @@ class Home extends Component {
   }
 
   render () {
-    let campusList = this.props.campuses.map(campus => (
-      <li key={campus.id}>
-        {campus.name}
-      </li>
-    ));
+    const { campuses } = this.props;
     return (
-      <div>
-        This is Home!!
-        <ul>
-          {campusList}
-        </ul>
+      <div className="container">
+        <div className="campus-list">
+          {
+            campuses.map(campus => (
+              <CampusItem key={campus.id} campus={campus} />
+            ))
+          }
+        </div>
       </div>
     );
   }

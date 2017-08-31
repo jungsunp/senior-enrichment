@@ -52,9 +52,7 @@ const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
   fetchInitialData: () => {
-    //dispatch to fetch campuses
     dispatch(fetchCampuses());
-    //dispatch to fetch students
     dispatch(fetchStudents());
   }
 });
