@@ -1,6 +1,6 @@
 # Senior Enrichment Project - by Jung Park
 
-title: Campus Manager
+Title: Campus Manager
 
 ## Initialize project
 
@@ -15,18 +15,18 @@ title: Campus Manager
 Inside of db 'campusmanager', I defined following 2 models:
 
   1. campuses
-    1) id
-    2) name
-    3) image
-    4) descriptions
+    * id
+    * name
+    * image
+    * descriptions
 
   2. students
-    1) id
-    2) name
-    3) email
-    4) image
-    5) phone
-    6) birthday
+    * id
+    * name
+    * email
+    * image
+    * phone
+    * birthday
 
 ### Navigate
 
