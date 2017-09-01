@@ -22,7 +22,10 @@ router.post('/', (req, res, next) => {
   Student.findOrCreate({
       where: {
         name: req.body.name,
-        email: req.body.email
+        image: req.body.image,
+        email: req.body.email,
+        birthday: req.body.birthday,
+        phone: req.body.phone,
       }
     })
     .then(students => {
@@ -31,15 +34,37 @@ router.post('/', (req, res, next) => {
     })
     .spread((campus, student) => {
       let addStudentPromise = campus.addStudent(student);
-      return [addStudentPromise, student];
+      return [addStudentPromise, campus, student];
     })
-    .spread((campus, student)  => res.status(201).send(student))
+    .spread((relation, campus, student)  => {
+      res.status(201).send({ campus, student });
+    })
     .catch(next);
 });
 
 router.put('/:id', (req, res, next) => {
   Student.findById(req.params.id)
-    .then(student => student.update(req.body))
+    .then(student => student.update({
+      name: req.body.name,
+      email: req.body.email,
+      birthday: req.body.birthday,
+      phone: req.body.phone,
+    }))
+    .then(student => {
+      let clearPromise = student.setCampuses(null);
+      return [clearPromise, student];
+    })
+    .spread((relation, student) => {
+      let campusPromise = Campus.findById(req.body.campusId);
+      return [campusPromise, student];
+    })
+    .spread((campus, student) => {
+      let addStudentPromise = campus.addStudent(student);
+      return [addStudentPromise, campus, student];
+    })
+    .spread((relation, campus, student)  => {
+      res.status(201).send({ campus, student });
+    })
     .then(student => req.res.status(202).send(student))
     .catch(next);
 });

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import CampusItem from './CampusItem';
 import StudentItem from './StudentItem';
 
-import { fetchCampus } from '../reducers/campuses';
+import { updateCampusThunk } from '../reducers/campuses';
 
 /* -----------------  Component  ------------------ */
 
@@ -14,30 +14,26 @@ class CampusDetail extends Component {
 
   constructor (props) {
     super(props);
-    this.state = {
-      name: '',
-      image: '',
-      description: ''
-    };
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange (evt) {
-
   }
 
   handleSubmit (evt) {
     evt.preventDefault();
+    const { campus } = this.props;
+    campus.name = evt.target.campusName.value;
+    campus.image = evt.target.campusImage.value;
+    campus.description = evt.target.campusDescription.value;
+    this.props.updateCampus(campus);
   }
 
   render () {
-    const { campus, students, name, image, description, handleSubmit, handleChange } = this.props;
+    const { campus, students, history } = this.props;
     if (!campus) return <div />;
-    const campusItem = <CampusItem campus={campus} />;
+    const campusItem = <CampusItem campus={campus} history={history} />;
     const studentItemArr = (students && students.length) ?
       students.map(student => (<StudentItem key={student.id} student={student} campus={campus} />)) :
       null;
+
     return (
       <div className="container">
 
@@ -51,28 +47,22 @@ class CampusDetail extends Component {
               {campusItem}
 
               <div className="item-update-container col-sm-6 col-lg-8">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={this.handleSubmit}>
                   <div className="form-group">
                     <label>Name</label>
                     <input
-                      onChange={handleChange}
-                      value={name}
                       className="form-control"
                       type="text"
                       name="campusName"
                       defaultValue={campus.name} />
                     <label>Image URL</label>
                     <input
-                      onChange={handleChange}
-                      value={image}
                       className="form-control"
                       type="text"
                       name="campusImage"
                       defaultValue={campus.image} />
                     <label>Description</label>
                     <textarea
-                      onChange={handleChange}
-                      value={description}
                       className="form-control campus-desc-control"
                       type="text"
                       name="campusDescription"
@@ -119,10 +109,18 @@ const mapStateToProps = (state, ownProps) => {
   if (campus) {
     students = campus.students;
   }
-  return { campus, students };
+  const { history } = ownProps;
+  return { campus, students, history };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({});
+const mapDispatchToProps = (dispatch, ownProps) => {
+  let { history } = ownProps;
+  return {
+    updateCampus: campus => {
+      dispatch(updateCampusThunk(campus, history));
+    }
+  };
+};
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 export default connector(CampusDetail);

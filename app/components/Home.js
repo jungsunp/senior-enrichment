@@ -14,9 +14,9 @@ class Home extends Component {
   }
 
   render () {
-    const { campuses } = this.props;
+    const { campuses, history } = this.props;
     const campusItemArr = campuses.map(campus => (
-      <CampusItem key={campus.id} campus={campus} />
+      <CampusItem key={campus.id} campus={campus} history={history} />
     ));
     return (
       <div className="container">
@@ -31,8 +31,9 @@ class Home extends Component {
 
 /* -----------------  Container  ------------------ */
 
-const mapStateToProps = state => ({
-  campuses: state.campuses
+const mapStateToProps = (state, ownProps) => ({
+  campuses: state.campuses,
+  history: ownProps.history
 });
 
 const mapDispatchToProps = dispatch => ({

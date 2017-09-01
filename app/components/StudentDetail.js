@@ -6,51 +6,50 @@ import { connect } from 'react-redux';
 import CampusItem from './CampusItem';
 import StudentItem from './StudentItem';
 
+import { updateStudentThunk } from '../reducers/students';
+
 /* -----------------  Component  ------------------ */
 
 class StudentDetail extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      name: '',
-      image: '',
-      birthday: '',
-      email: '',
-      phone: '',
-      campusId: ''
-    };
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange (evt) {
-
   }
 
   handleSubmit (evt) {
     evt.preventDefault();
+    const { student } = this.props;
+    student.name = evt.target.studentName.value;
+    student.campusId = evt.target.studentCampus.value;
+    student.birthday = evt.target.studentBirthday.value;
+    student.email = evt.target.studentEmail.value;
+    student.phone = evt.target.studentPhone.value;
+    this.props.updateStudent(student);
   }
 
   render () {
-    const { student, campuses, name, birthday, email, phone, image, campusId, handleChange, handleSubmit } = this.props;
+    const { student, campuses, history } = this.props;
     if (!student) return <div />;
     const studentItem = <StudentItem student={student} />;
-    let campusIndex = 0;
+    let campusIndex = null;
     campuses.forEach((campus, index) => {
-      if (campus.id === student.campuses[0].id) campusIndex = index;
+      if ((student.campuses[0]) && (campus.id === student.campuses[0].id)) {
+        campusIndex = index;
+      }
     });
-    const campusSelect = (<select className="form-control">
-        {campuses.map(campus => (
-          (campus.id === student.campuses[0].id) ?
-            <option key={campus.id} selected="selected">
-              {campus.name}s
+    const campusSelect = (<select className="form-control" name="studentCampus">
+        {campuses.map((campus, index) => (
+          (index === campusIndex) ?
+            <option key={campus.id} value={campus.id} selected="selected">
+              {campus.name}
             </option> :
-            <option key={campus.id}>
+            <option key={campus.id} value={campus.id}>
               {campus.name}
             </option>
         ))}
       </select>);
+
     return (
       <div className="container">
 
@@ -64,12 +63,10 @@ class StudentDetail extends Component {
               {studentItem}
 
               <div className="item-update-container col-sm-6 col-lg-8">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={this.handleSubmit}>
                   <div className="form-group">
                     <label>Name</label>
                     <input
-                      onChange={handleChange}
-                      value={name}
                       className="form-control"
                       type="text"
                       name="studentName"
@@ -78,34 +75,20 @@ class StudentDetail extends Component {
 
                     {campusSelect}
 
-                    <label>Image URL</label>
-                    <input
-                      onChange={handleChange}
-                      value={image}
-                      className="form-control"
-                      type="text"
-                      name="studentImage"
-                      defaultValue={student.image} />
                     <label>Birthday</label>
                     <input
-                      onChange={handleChange}
-                      value={birthday}
                       className="form-control"
                       type="text"
                       name="studentBirthday"
                       defaultValue={student.birthday} />
                     <label>Email</label>
                     <input
-                      onChange={handleChange}
-                      value={email}
                       className="form-control"
                       type="text"
                       name="studentEmail"
                       defaultValue={student.email} />
                     <label>Phone</label>
                     <input
-                      onChange={handleChange}
-                      value={phone}
                       className="form-control"
                       type="text"
                       name="studentPhone"
@@ -129,7 +112,11 @@ class StudentDetail extends Component {
           </div>
           <div className="panel-body">
             <div className="item-students-container">
-              <CampusItem campus={campuses[campusIndex]} />
+              {
+                (campusIndex !== null) ?
+                  <CampusItem campus={campuses[campusIndex]} history={history} /> :
+                  null
+              }
             </div>
           </div>
         </div>
@@ -148,10 +135,18 @@ const mapStateToProps = (state, ownProps) => {
     return tmpStudent.id === studentId;
   });
   const campuses = state.campuses;
-  return { student, campuses };
+  const { history } = ownProps;
+  return { student, campuses, history };
 };
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = (dispatch, ownProps) => {
+  let { history } = ownProps;
+  return {
+    updateStudent: student => {
+      dispatch(updateStudentThunk(student, history));
+    }
+  };
+};
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 export default connector(StudentDetail);

@@ -3,31 +3,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { addCampusThunk } from '../reducers/campuses';
+
 /* -----------------  Component  ------------------ */
 
 class AddCampus extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      name: '',
-      image: '',
-      description: ''
-    };
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange (evt) {
-
   }
 
   handleSubmit (evt) {
     evt.preventDefault();
+    const campus = {
+      name: evt.target.campusName.value,
+      image: evt.target.campusImage.value,
+      description: evt.target.campusDescription.value
+    };
+    this.props.addCampus(campus);
   }
 
   render () {
-    const { name, image, description, handleSubmit, handleChange } = this.props;
     return (
       <div className="container">
 
@@ -40,28 +37,22 @@ class AddCampus extends Component {
             <div className="item-all-container">
 
               <div className="item-update-container col-sm-12 col-lg-12">
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={this.handleSubmit}>
                   <div className="form-group">
                     <label>Name</label>
                     <input
-                      onChange={handleChange}
-                      value={name}
                       className="form-control"
                       type="text"
                       name="campusName"
                       placeholder="Enter name" />
                     <label>Image URL</label>
                     <input
-                      onChange={handleChange}
-                      value={image}
                       className="form-control"
                       type="text"
                       name="campusImage"
                       placeholder="Enter URL for image" />
                     <label>Description</label>
                     <textarea
-                      onChange={handleChange}
-                      value={description}
                       className="form-control campus-desc-control"
                       type="text"
                       name="campusDescription"
@@ -90,9 +81,14 @@ class AddCampus extends Component {
 
 const mapStateToProps = state => ({});
 
-const mapDispatchToProps = dispatch => ({
-
-});
+const mapDispatchToProps = (dispatch, ownProps) => {
+  let { history } = ownProps;
+  return {
+    addCampus: (campus) => {
+      dispatch(addCampusThunk(campus, history));
+    },
+  }
+};
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 export default connector(AddCampus);

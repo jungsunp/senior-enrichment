@@ -1,11 +1,14 @@
 import axios from 'axios';
 
+import { addStudentToCampus, removeStudentFromCampus } from './campuses';
+
 /* -----------------  Action Types  ------------------ */
 
 const INITIALIZE_STUDENTS = 'INITIALIZE_STUDENTS';
 const ADD_STUDENT = 'ADD_STUDENT';
 const REMOVE_STUDENT = 'REMOVE_STUDENT';
 const UPDATE_STUDENT = 'UPDATE_STUDENT';
+const REPLACE_CAMPUS = 'REPLACE_CAMPUS';
 
 /* -----------------  Action Creators  ------------------ */
 
@@ -29,6 +32,7 @@ const updateStudent = student => ({
   student
 });
 
+
 /* -----------------  Reducer  ------------------ */
 
 export default function reducer (students = [], action) {
@@ -46,9 +50,12 @@ export default function reducer (students = [], action) {
 
     case UPDATE_STUDENT:
       return students.map(student => {
-        return (student.id === action.student.id) ?
-          action.student :
-          student;
+        if (student.id === action.student.id) {
+            action.student.campuses = student.campuses;
+            return action.student;
+          } else {
+            return student;
+          }
       });
 
     default:
@@ -67,14 +74,17 @@ export const fetchStudents = () => {
   };
 };
 
-export const addStudentThunk = student => {
+export const addStudentThunk = (studentData, history) => {
   return dispatch => {
-    axios.post('/api/students', student)
+    axios.post('/api/students', studentData)
       .then(res => res.data)
-      .then(createdStudent => {
-        dispatch(addStudent(createdStudent));
+      .then(({ campus, student }) => {
+        student.campuses = [ campus ];
+        dispatch(addStudent(student));
+        dispatch(addStudentToCampus(campus, student));
+        history.push(`/students/${student.id}`);
       })
-      .catch(err => console.error(`Error adding a student ${student}`, err));
+      .catch(err => console.error(`Error adding a student ${studentData}`, err));
   };
 };
 
@@ -88,13 +98,17 @@ export const removeStudentThunk = studentId => {
   };
 };
 
-export const updateStudentThunk = (studentId, student) => {
+export const updateStudentThunk = (studentData, history) => {
   return dispatch => {
-    axios.put(`/api/students/${studentId}`, student)
+    axios.put(`/api/students/${studentData.id}`, studentData)
       .then(res => res.data)
-      .then(updatedStudent => {
-        dispatch(updateStudent(updatedStudent));
+      .then(({ campus, student }) => {
+        dispatch(updateStudent(student));
+        dispatch(removeStudentFromCampus(student.campuses[0], student));
+        dispatch(addStudentToCampus(campus, student));
+        // TODO : write action for replace campus.
+        history.push(`/students/${student.id}`);
       })
-      .catch(err => console.error(`Error updating a student ${student}`, err));
+      .catch(err => console.error(`Error updating a student ${studentData}`, err));
   };
 };
