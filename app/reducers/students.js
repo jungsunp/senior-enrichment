@@ -8,7 +8,6 @@ const INITIALIZE_STUDENTS = 'INITIALIZE_STUDENTS';
 const ADD_STUDENT = 'ADD_STUDENT';
 const REMOVE_STUDENT = 'REMOVE_STUDENT';
 const UPDATE_STUDENT = 'UPDATE_STUDENT';
-const REPLACE_CAMPUS = 'REPLACE_CAMPUS';
 
 /* -----------------  Action Creators  ------------------ */
 
@@ -32,7 +31,6 @@ const updateStudent = student => ({
   student
 });
 
-
 /* -----------------  Reducer  ------------------ */
 
 export default function reducer (students = [], action) {
@@ -51,7 +49,7 @@ export default function reducer (students = [], action) {
     case UPDATE_STUDENT:
       return students.map(student => {
         if (student.id === action.student.id) {
-            action.student.campuses = student.campuses;
+            // action.student.campuses = student.campuses;
             return action.student;
           } else {
             return student;
@@ -88,13 +86,23 @@ export const addStudentThunk = (studentData, history) => {
   };
 };
 
-export const removeStudentThunk = studentId => {
+export const removeStudentThunk = (student, history) => {
   return dispatch => {
-    axios.delete(`/api/students/${studentId}`)
+    axios.delete(`/api/students/${student.id}`)
       .then(() => {
-        dispatch(removeStudent(studentId));
+        console.log('student!!', student)
+        if (student.campuses && student.campuses[0]){
+          dispatch(removeStudentFromCampus(student.campuses[0], student));
+        }
+        dispatch(removeStudent(student.id));
+        if (history.location.pathname.indexOf('/campuses/') < 0){
+          // if removing student from campus detail page
+          // so stay in that page
+          // else, redirect to student list page
+          history.push('/students/');
+        }
       })
-      .catch(err => console.error(`Error removing a student ${studentId}`, err));
+      .catch(err => console.error(`Error removing a student ${student.id}`, err));
   };
 };
 
@@ -103,10 +111,10 @@ export const updateStudentThunk = (studentData, history) => {
     axios.put(`/api/students/${studentData.id}`, studentData)
       .then(res => res.data)
       .then(({ campus, student }) => {
+        student.campuses = [campus];
         dispatch(updateStudent(student));
         dispatch(removeStudentFromCampus(student.campuses[0], student));
         dispatch(addStudentToCampus(campus, student));
-        // TODO : write action for replace campus.
         history.push(`/students/${student.id}`);
       })
       .catch(err => console.error(`Error updating a student ${studentData}`, err));

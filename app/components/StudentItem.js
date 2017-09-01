@@ -4,12 +4,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
+import { removeStudentThunk } from '../reducers/students';
+
 /* -----------------  Component  ------------------ */
 
 class StudentItem extends Component {
 
   constructor(props) {
     super(props);
+    this.handleRemove = this.handleRemove.bind(this);
+  }
+
+  handleRemove (evt) {
+    evt.stopPropagation();
+    this.props.removeStudent(this.props.student);
   }
 
   render () {
@@ -34,8 +42,8 @@ class StudentItem extends Component {
                 Detail
               </NavLink>
               <button
-                className="btn btn-default caption-button"
-                type="submit">
+                onClick={this.handleRemove}
+                className="btn btn-default caption-button">
                 Remove
               </button>
             </p>
@@ -49,12 +57,16 @@ class StudentItem extends Component {
 
 /* -----------------  Container  ------------------ */
 
-const mapStateToProps = state => ({
-});
+const mapStateToProps = state => ({});
 
-const mapDispatchToProps = dispatch => ({
-
-});
+const mapDispatchToProps = (dispatch, ownProps) => {
+  let { history } = ownProps;
+  return {
+    removeStudent: student => {
+      dispatch(removeStudentThunk(student, history));
+    }
+  };
+};
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 export default connector(StudentItem);

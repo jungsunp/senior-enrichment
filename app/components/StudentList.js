@@ -14,9 +14,13 @@ class StudentList extends Component {
   }
 
   render () {
-    const { students } = this.props;
+    const { students, history } = this.props;
     const studentItemArr = students.map(student => (
-      <StudentItem key={student.id} student={student} campus={student.campuses[0]} />
+      <StudentItem
+        key={student.id}
+        student={student}
+        campus={student.campuses[0]}
+        history={history} />
     ));
     return (
       <div className="container">
@@ -35,9 +39,7 @@ const mapStateToProps = state => ({
   students: state.students
 });
 
-const mapDispatchToProps = dispatch => ({
-
-});
+const mapDispatchToProps = dispatch => ({});
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 export default connector(StudentList);

@@ -27,11 +27,20 @@ class CampusDetail extends Component {
   }
 
   render () {
+
     const { campus, students, history } = this.props;
     if (!campus) return <div />;
-    const campusItem = <CampusItem campus={campus} history={history} />;
+
+    const campusItem = (<CampusItem
+      campus={campus}
+      history={history} />);
+
     const studentItemArr = (students && students.length) ?
-      students.map(student => (<StudentItem key={student.id} student={student} campus={campus} />)) :
+      students.map(student => (<StudentItem
+        key={student.id}
+        student={student}
+        campus={campus}
+        history={history} />)) :
       null;
 
     return (
@@ -93,6 +102,7 @@ class CampusDetail extends Component {
         </div>
 
       </div>
+
     );
   }
 
@@ -108,6 +118,9 @@ const mapStateToProps = (state, ownProps) => {
   let students = [];
   if (campus) {
     students = campus.students;
+    students.forEach(student => {
+      student.campuses = [campus];
+    });
   }
   const { history } = ownProps;
   return { campus, students, history };

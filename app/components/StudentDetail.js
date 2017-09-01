@@ -29,9 +29,14 @@ class StudentDetail extends Component {
   }
 
   render () {
+
     const { student, campuses, history } = this.props;
     if (!student) return <div />;
-    const studentItem = <StudentItem student={student} />;
+
+    const studentItem = (<StudentItem
+      student={student}
+      history={history} />);
+
     let campusIndex = null;
     campuses.forEach((campus, index) => {
       if ((student.campuses[0]) && (campus.id === student.campuses[0].id)) {

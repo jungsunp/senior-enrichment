@@ -16,7 +16,10 @@ class Home extends Component {
   render () {
     const { campuses, history } = this.props;
     const campusItemArr = campuses.map(campus => (
-      <CampusItem key={campus.id} campus={campus} history={history} />
+      <CampusItem
+        key={campus.id}
+        campus={campus}
+        history={history} />
     ));
     return (
       <div className="container">
@@ -36,9 +39,7 @@ const mapStateToProps = (state, ownProps) => ({
   history: ownProps.history
 });
 
-const mapDispatchToProps = dispatch => ({
-
-});
+const mapDispatchToProps = dispatch => ({});
 
 const connector = connect(mapStateToProps, mapDispatchToProps);
 export default connector(Home);

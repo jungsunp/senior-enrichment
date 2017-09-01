@@ -1,6 +1,74 @@
-# Senior Enrichment Project
+# Senior Enrichment Project - by Jung Park
 
-Make a thing!
+title: Campus Manager
+
+## Initialize project
+
+1. run `npm install`
+2. run `npm run seed`
+    * NOTE: If you get an error, you might have to run this command couple times. This seems to be a problem with older version of PG.
+3. run `npm start`
+
+## Testing
+
+### DB
+Inside of db 'campusmanager', I defined following 2 models:
+
+  1. campuses
+    1) id
+    2) name
+    3) image
+    4) descriptions
+
+  2. students
+    1) id
+    2) name
+    3) email
+    4) image
+    5) phone
+    6) birthday
+
+### Navigate
+
+1. Go to `http://localhost:1337/` from Chrome
+    * expected: list of campuses
+2. Using links on the navbar, try navigate to students page
+    * expected: list of students
+3. Try toggling between 2 different views with links in the navbar
+    * expected: list of campuses/students
+4. Click detail from campus item
+    * expected: detail of campus with students
+5. Click detail from student item
+    * expected: detail of student with one's campus
+6. Try clicking detail button for campus from student detail form
+    * expected: detail of campus
+7. Try clicking detail button for student from campus detail form
+    * expected: detail of student
+
+### Actions
+1. Using 'New Campus' button located below navbar, add new campus. You can specify name, image url (e.x https://i.ytimg.com/vi/v9oxyswY8fs/maxresdefault.jpg), and description.
+    * expected: new campus is added without any student
+2. Use update button in detail page to update detail of campus
+    * expected: page is not refreshed, and new campus detail is updated immediately
+3. Using 'New Student' button located below navbar, add new student. You can specify name, campus, Birthday, email, and phone number.
+    * expected: new student is added with his/her campus picked
+4. Use update button in detail page to update detail of student
+    * expected: page is not refreshed, and new student detail is updated immediately
+5. Try assigning student to different campus from student detail page
+    * expected: new campus is assigned to student, and page detail updates immediately without full refresh
+6. Try clicking remove button from campus item
+    * expected: campus is removed without full refresh
+7. Try clicking remove button from student item
+    * expected: student is removed without full refresh
+8. Try clicking remove button from campus item in student detail form
+    * expected: campus is removed without full refresh
+9. Try clicking remove button from student item in campus detail form
+    * expected: student is removed without full refresh
+
+
+`---------------------------------------------------------------`
+  # Original Instruction
+`---------------------------------------------------------------`
 
 ## Getting started
 
@@ -88,7 +156,7 @@ DELETE
 
 ### How to test functionality without a frontend
 - GET: use your browser
-- POST / PUT / DELETE : 
+- POST / PUT / DELETE :
  - CLI (command line interface) with `curl`
    - e.g. `curl -H "Content-Type: application/json" -X POST -d '{"username":"kate","password":"1234"}' http://localhost:3000/api/login`
    - `-H`: headers. `-X`: verb. `-d`: data (must be of the type specified in headers). http://[address]:[port]/[route_path]
