@@ -98,6 +98,11 @@ export default function reducer (campuses = [], action) {
   }
 }
 
+/*
+Reducers and Thunks are looking really solid! Nice work on these
+*/
+
+
 /* -----------------  Thunk Creators  ------------------ */
 
 export const fetchCampuses = () => {

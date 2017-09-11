@@ -31,6 +31,11 @@ class CampusDetail extends Component {
     const { campus, students, history } = this.props;
     if (!campus) return <div />;
 
+    /*
+    Really nice work with the campusItem and StudentItem! You kept those
+    components really modular and reusable, passing them only the relevant
+    information. I like your design choices here.
+    */
     const campusItem = (<CampusItem
       campus={campus}
       history={history} />);

@@ -106,7 +106,7 @@ const seed = () => {
 
 console.log('Syncing database campusmanager ...');
 
-db.sync({ force: true })
+db.sync({force: true})
   .then(() => {
     console.log('Seeding database campusmanager ...');
     return seed();

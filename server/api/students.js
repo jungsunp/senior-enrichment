@@ -1,4 +1,31 @@
 const router = require('express').Router();
+/*
+Your back end api is looking great. One small sidenote just for the
+sake of clarity (and maybe it's just a personal preference), but I like
+to name my routers the name of the actual particular router I am using.
+So instead of:
+
+const router = require('express'.Router();
+
+I would write:
+
+const students = require('express').Router();
+
+Then I would write:
+
+students.get
+students.post
+students.put
+etc...
+
+It's completely up to you how you write these of course, but I've found
+its a little more clear for other people reading through your code rather
+than having every single router named 'router'. But whatever works best for you
+is totally fine as well. Just a naming convention. But I have found that when
+projects start to get bigger, that naming starts to really matter more than you
+might think.
+*/
+
 const { Campus, Student } = require('../../db/models');
 
 module.exports = router;
@@ -68,6 +95,14 @@ router.put('/:id', (req, res, next) => {
       res.status(201).send({ campus, student });
     })
     .then(student => req.res.status(202).send(student))
+    /*
+    Line 97 above won't be executed. At this point you have already
+    sent your response off. Line 95 will resolve the request and does
+    not contain another promise that you can chain another .then() off of.
+    Also, on line 97, you wrote req.res.status. You can only execute methods
+    off res, since that is the response object that contains the methods you
+    are trying to use like .status() and .send().
+    */
     .catch(next);
 });
 
