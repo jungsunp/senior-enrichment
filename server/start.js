@@ -57,3 +57,9 @@ if (module === require.main) {
     }
   );
 }
+
+/*
+Great work on this project! I left a few comments which you will see as you scroll
+through, but for the most part, everything looked really well organized and by the
+book. You have some good patterns here.
+*/

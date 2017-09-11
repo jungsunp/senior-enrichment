@@ -55,6 +55,12 @@ class StudentDetail extends Component {
         ))}
       </select>);
 
+      /*
+      I like this bit of logic you wrote in above for ensuring that the student's campus
+      would be the first one to show up on the <select> list. It's a nice touch.
+      The code in these components is also really clearly written and easy to understand.
+      */
+
     return (
       <div className="container">
 
